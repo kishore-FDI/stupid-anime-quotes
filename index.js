@@ -1,19 +1,9 @@
-const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
-const schema = require("./Schema");
+const { schema } = require("../schema");
 
-const app = express();
-const PORT = 3000;
-
-// GraphQL API endpoint
-app.use(
-  "/graphql",
+module.exports = (req, res) => {
   graphqlHTTP({
     schema,
     graphiql: true, // Enables the GraphiQL interface for testing
-  })
-);
-
-app.listen(PORT, () => {
-  console.log(`Anime Quotes GraphQL API is running at http://localhost:${PORT}/graphql`);
-});
+  })(req, res);
+};
