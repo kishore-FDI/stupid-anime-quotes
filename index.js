@@ -5,7 +5,12 @@ const { schema } = require("../schema");
 const app = express();
 
 // Set up the GraphQL endpoint
-app.use("/graphql", graphqlHTTP({
+app.use("/graphql", (req, res, next) => {
+    if (req.method === "GET") {
+        return res.status(403).json({ error: "GET requests are not allowed." });
+    }
+    next();
+}, graphqlHTTP({
     schema,
     graphiql: true, // Enables the GraphiQL interface for testing
 }));
